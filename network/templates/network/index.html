@@ -1,0 +1,14 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+        {% for comment in comments%}
+            <div class="posting">
+            <strong>{{comment.user_id}}</strong>
+            <p>{{comment.comment}}</p>
+            <i>{{comment.comment_time}}</i>
+            </div>
+        <hr>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
