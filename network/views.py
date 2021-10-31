@@ -8,7 +8,7 @@ from .models import Comments, User
 from datetime import datetime
 
 def index(request):
-    comments = Comments.objects.all()
+    comments = Comments.objects.order_by('-comment_time')
 
     return render(request, "network/index.html", {"comments": comments})
   
