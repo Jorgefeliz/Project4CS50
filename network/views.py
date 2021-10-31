@@ -85,8 +85,10 @@ def new_post(request):
             print("Error in database comment")
         
         comments = Comments.objects.all()
-        print(comments)
         return render(request, "network/index.html", {"comments": comments})
+
+    else:
+        return render(request, "network/new_post.html")
 
 
 
