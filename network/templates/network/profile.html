@@ -1,0 +1,36 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+    <div id="profile">
+        <h3> {{user_profile.username}}</h3>
+        <ul>
+            <li>Email: {{user_profile.email}}</li>
+            <li>Following: XX</li>
+            <li>Followers: YY</li>
+        </ul>
+        {% if same_user == False %}
+        
+        <form>
+            {% csrf_token %}
+            <input type="button" value="Follow" onclick="add_follower( {{ user_profile.id }} )" />
+        </form>
+            <br>
+        {% endif%}
+
+
+        <bold> Comments </bold>
+        <hr>
+
+        {% for comment in comments%}
+            <div class="posting">
+            <strong>{{comment.user_id}}</strong>
+            <p>{{comment.comment}}</p>
+            <i>{{comment.comment_time}}</i>
+            </div>
+        <hr>
+        {% endfor %}
+
+    </div>
+    {% endif %}
+{% endblock %}

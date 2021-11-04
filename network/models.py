@@ -13,3 +13,9 @@ class Comments (models.Model):
     def __str__(self):
         return f" ({self.user_id} {self.comment} {self.comment_time})"
 
+class Followers (models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
+    Follower = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="followers")
+
+    def __str__(self):
+        return f" ({self.user_id} {self.Follower})"
