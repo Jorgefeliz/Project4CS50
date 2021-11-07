@@ -1,0 +1,18 @@
+.posting{
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+#new_post{
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+#profile{
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+textarea{
+    width: 550px;
+}

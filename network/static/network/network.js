@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function add_follower(user_id){
-    console.log(user_id)
+    console.log(user_id);
     let route = "/followers/" + user_id ; 
+    console.log(route);
     fetch(route, {
         method: 'POST',
         body: JSON.stringify({

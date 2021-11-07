@@ -2,12 +2,12 @@
 
 {% block body %}
     {% if user.is_authenticated %}
-    <div id="post">
+    <div id="new_post">
         <h3> New Post</h3>
         <form action="{% url 'new_post' %}" method="POST">
             {% csrf_token %}
             <textarea id="comment" name="comment" ></textarea> <br>
-            <input type="submit" value="Post">
+            <input type="submit" class="btn btn-primary btn-sm" value="Post">
         </form>
     </div>
     <hr>

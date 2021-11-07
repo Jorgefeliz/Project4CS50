@@ -6,29 +6,35 @@
         <h3> {{user_profile.username}}</h3>
         <ul>
             <li>Email: {{user_profile.email}}</li>
-            <li>Following: XX</li>
-            <li>Followers: YY</li>
+            <li>Following: {{following}}</li>
+            <li>Followers: {{followers}}</li>
         </ul>
         {% if same_user == False %}
         
-        <form>
+        <form  action="{% url 'followers' %}" method="post" >
             {% csrf_token %}
-            <input type="button" value="Follow" onclick="add_follower( {{ user_profile.id }} )" />
+            <!-- 
+            <input type="button" value="Follow" onclick="add_follower( {{ user_profile.id }} )" /> 
+            -->
+            <input type="hidden" name="user_id" value="{{user_profile.id}}">
+            <input type="hidden" name="follow_action" value="{{follow_status}}">
+            <input type="submit" class="btn btn-primary" value="{{follow_status}}">
         </form>
             <br>
         {% endif%}
 
-
-        <bold> Comments </bold>
         <hr>
+        <bold> Comments </bold>
+        
 
         {% for comment in comments%}
             <div class="posting">
             <strong>{{comment.user_id}}</strong>
             <p>{{comment.comment}}</p>
             <i>{{comment.comment_time}}</i>
+            <hr>
             </div>
-        <hr>
+        
         {% endfor %}
 
     </div>
