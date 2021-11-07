@@ -1,0 +1,48 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+   
+
+        {% for comment in page_obj.object_list %}
+            <div class="posting">
+            <a href="/profile/{{comment.user_id.id}}"><strong>{{comment.user_id}}</strong></a>
+
+            <p>{{comment.comment}}</p>
+            <button type="button" class="btn btn-primary btn-sm">Like</button>
+            <br>
+ 
+            <i>{{comment.comment_time}}</i>
+            <hr>
+            </div>
+        
+        {% endfor %}
+
+       
+        
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+              </li>
+            {% endif %}
+
+            
+            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a></li>
+
+             
+
+              {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+              </li>
+              {% endif%}
+            </ul>
+          </nav>
+  
+   
+{% endblock %}

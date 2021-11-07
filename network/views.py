@@ -7,6 +7,7 @@ from .models import Comments, Followers, User
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import EmptyPage, Paginator
 
 from datetime import datetime
 
@@ -180,7 +181,7 @@ def following(request):
 
     user_id = User.objects.get(pk=request.user.id)
     following = Followers.objects.filter(user_id=user_id)
-    print(following)
+    paginar = []
     all_following_comments= []
 
     for seguidores in following:
@@ -190,9 +191,17 @@ def following(request):
     #print(all_following_comments)
     for level_comment in all_following_comments:
         for comments in level_comment:
-            print(comments.user_id)
-            print(comments.comment)
+            paginar.append(comments)
 
-    return render(request,"network/follows_comment.html", {"all_comments": all_following_comments})
+    pages = Paginator(paginar,5)
+    
+    page_num = request.GET.get('page', 1)
+    try:
+        page = pages.page(page_num)
+    except EmptyPage:
+        page = pages.page(1)
+
+    return render(request,"network/pages.html", {"page_obj": page})
+    #return render(request,"network/follows_comment.html", {"all_comments": all_following_comments})
 
 
