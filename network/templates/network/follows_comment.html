@@ -1,0 +1,22 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {% for comments in all_comments %}
+
+        {% for comment in comments%}
+            <div class="posting">
+            <a href="/profile/{{comment.user_id.id}}"><strong>{{comment.user_id}}</strong></a>
+
+            <p>{{comment.comment}}</p>
+            <button type="button" class="btn btn-primary btn-sm">Like</button>
+            <br>
+ 
+            <i>{{comment.comment_time}}</i>
+            <hr>
+            </div>
+        
+        {% endfor %}
+    
+    {% endfor%}
+   
+{% endblock %}

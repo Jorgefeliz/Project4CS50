@@ -97,10 +97,7 @@ def new_post(request):
         
         comments = Comments.objects.order_by('-comment_time')
 
-        return render(request, "network/index.html", {
-            "comments": comments,
-            "user_id": request.user.id
-            })
+        return HttpResponseRedirect(reverse("index"))
 
     else:
         return render(request, "network/new_post.html", {"user_id": request.user.id})
@@ -142,10 +139,6 @@ def profile(request, user_id):
                 })
         
 
-    
-         
-
-
 def followers(request):
 
     if request.method == "POST":
@@ -182,5 +175,24 @@ def followers(request):
                 print("Error while deleting user")
             
             return HttpResponseRedirect(reverse("index"))
+
+def following(request):
+
+    user_id = User.objects.get(pk=request.user.id)
+    following = Followers.objects.filter(user_id=user_id)
+    print(following)
+    all_following_comments= []
+
+    for seguidores in following:
+        comments = Comments.objects.filter(user_id = seguidores.follower).order_by('-comment_time')
+        all_following_comments.append(comments)
+
+    #print(all_following_comments)
+    for level_comment in all_following_comments:
+        for comments in level_comment:
+            print(comments.user_id)
+            print(comments.comment)
+
+    return render(request,"network/follows_comment.html", {"all_comments": all_following_comments})
 
 
