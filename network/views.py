@@ -19,8 +19,16 @@ def index(request):
     except:
         user_id = "none"
 
+    pages = Paginator(comments,10)
+    
+    page_num = request.GET.get('page', 1)
+    try:
+        page = pages.page(page_num)
+    except EmptyPage:
+        page = pages.page(1)
+
     return render(request, "network/index.html", {
-        "comments": comments,
+        "page_obj": page,
         "user_id": user_id
         })
   
@@ -127,9 +135,17 @@ def profile(request, user_id):
         follow_status = "Unfollow"
     else:
         follow_status = "Follow"
+
+    pages = Paginator(comments,10)
+    
+    page_num = request.GET.get('page', 1)
+    try:
+        page = pages.page(page_num)
+    except EmptyPage:
+        page = pages.page(1)
   
     return render(request, "network/profile.html",{
-                "comments": comments,
+                "page_obj": page,
                 "user_profile": user_profile,
                 "user_id": request.user.id,  
                 "same_user": same_user,
@@ -193,7 +209,7 @@ def following(request):
         for comments in level_comment:
             paginar.append(comments)
 
-    pages = Paginator(paginar,5)
+    pages = Paginator(paginar,10)
     
     page_num = request.GET.get('page', 1)
     try:
