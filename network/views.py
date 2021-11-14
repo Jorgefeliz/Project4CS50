@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import EmptyPage, Paginator
+import json
 
 from datetime import datetime
 
@@ -220,4 +221,20 @@ def following(request):
     return render(request,"network/pages.html", {"page_obj": page})
     #return render(request,"network/follows_comment.html", {"all_comments": all_following_comments})
 
+@csrf_exempt
+@login_required
+def edit_post(request):
+
+    try:
+        comment = json.loads(request.body)
+    except:
+        comment = 999
+
+    print(comment['comment_id'])
+
+    to_edit = Comments.objects.get(pk = comment['comment_id'])
+    
+    print(to_edit)
+    #print(test)
+    return JsonResponse(to_edit.serialize(), safe=False)
 

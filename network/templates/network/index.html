@@ -3,12 +3,12 @@
 {% block body %}
     {% if user.is_authenticated %}
         {% for comment in page_obj.object_list %}
-            <div class="posting">
+            <div class="posting" id="post={{comment.id}}">
             <a href="/profile/{{comment.user_id.id}}"><strong>{{comment.user_id}}</strong></a>
 
             {% if comment.user_id == user_id%}
                 <br>
-                <em> Edit</em>
+                <input type="button" value="Edit" onclick="edit_post( {{ comment.id}} )" />
                 <br>
                 
 

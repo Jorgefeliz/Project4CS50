@@ -24,4 +24,29 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     localStorage.clear();
   }
+
+
+function edit_post(comment_id){
+  
+  let route = '/edit_post' 
+  console.log(route)
+  fetch(route, {
+    method: 'POST',
+    body: JSON.stringify({
+        comment_id: comment_id
+  
+           })
+      })
+  .then(response => response.json())
+  .then(result => {
+      // Print result
+ 
+      console.log(result);
+        });
+
+
+  alert("Your trying to edit" + comment_id)
+
+
+}
   
