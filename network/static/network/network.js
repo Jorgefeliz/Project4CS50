@@ -27,8 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function edit_post(comment_id){
-  
+
+  let mydiv = "#post" + comment_id;
   let route = '/edit_post' 
+
   console.log(route)
   fetch(route, {
     method: 'POST',
@@ -42,10 +44,24 @@ function edit_post(comment_id){
       // Print result
  
       console.log(result);
+       
+  document.querySelector(mydiv).innerHTML = `
+  <div class="posting" id="post${comment_id}">
+     
+
+  <textarea> ${result["comment"]} </textarea>
+
+  <button type="button" class="btn btn-primary btn-sm">Post </button>
+  <br>
+
+  
+     <hr>
+  </div>
+  `;
+
         });
 
-
-  alert("Your trying to edit" + comment_id)
+  //alert("Your trying to edit" + comment_id)
 
 
 }

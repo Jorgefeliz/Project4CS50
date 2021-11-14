@@ -233,8 +233,8 @@ def edit_post(request):
     print(comment['comment_id'])
 
     to_edit = Comments.objects.get(pk = comment['comment_id'])
+
     
-    print(to_edit)
     #print(test)
     return JsonResponse(to_edit.serialize(), safe=False)
 
