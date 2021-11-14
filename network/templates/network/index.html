@@ -4,21 +4,24 @@
     {% if user.is_authenticated %}
         {% for comment in page_obj.object_list %}
             <div class="posting" id="post{{comment.id}}">
-            <a href="/profile/{{comment.user_id.id}}"><strong>{{comment.user_id}}</strong></a>
+            <a href="/profile/{{comment.user_id.id}}"><strong id="user{{comment.id}}">{{comment.user_id}}</strong></a>
 
-            {% if comment.user_id == user_id%}
-                <br>
-                <input type="button" value="Edit" onclick="edit_post( {{ comment.id}} )" />
-                <br>
-                
+            <div id="texto{{comment.id}}"> 
 
-            {% endif %}
-            <p>{{comment.comment}}</p>
-            <button type="button" class="btn btn-primary btn-sm">Like</button>
-            <br>
- 
-            <i>{{comment.comment_time}}</i>
-            <hr>
+              
+                  <p>{{comment.comment}}</p>
+                  <button type="button" class="btn btn-primary btn-sm">Like</button>
+
+                  {% if comment.user_id == user_id%}
+                  <input type="button" value="Edit" onclick="edit_post( {{ comment.id}} )" />
+                  <br>                       
+                   {% endif %}
+               
+      
+                </div>
+                  <i>{{comment.comment_time}}</i>
+              
+              <hr>
             </div>
         
         {% endfor %}

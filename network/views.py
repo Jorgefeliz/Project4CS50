@@ -225,16 +225,40 @@ def following(request):
 @login_required
 def edit_post(request):
 
-    try:
-        comment = json.loads(request.body)
-    except:
-        comment = 999
+    if request.method == 'POST':
+        try:
+            comment = json.loads(request.body)
+        except:
+            comment = 999
 
-    print(comment['comment_id'])
+        print(comment['comment_id'])
 
-    to_edit = Comments.objects.get(pk = comment['comment_id'])
+        to_edit = Comments.objects.get(pk = comment['comment_id'])
 
-    
-    #print(test)
-    return JsonResponse(to_edit.serialize(), safe=False)
+        
+        #print(test)
+        return JsonResponse(to_edit.serialize(), safe=False)
 
+    elif request.method == 'PUT':
+
+        try:
+            comment = json.loads(request.body)
+        except:
+            return JsonResponse({"message": "Error, while updating"}, safe=False)
+
+        print(comment['new_comment'])
+
+        to_update = Comments.objects.get(pk = comment['comment_id'])
+
+        user = User.objects.get(pk=request.user.id)
+        print(user)
+        print(to_update.user_id)
+        if (user == to_update.user_id):
+            to_update.comment = comment['new_comment']
+            to_update.save()
+        else:
+            return JsonResponse({"message": "not authorize user"}, safe=False)
+
+       
+
+        return JsonResponse(to_update.serialize(), safe=False)
