@@ -10,10 +10,13 @@
 
               
                   <p>{{comment.comment}}</p>
-                  <button type="button" class="btn btn-primary btn-sm">Like</button>
+
+                  <em id="like{{comment.id}}">{{ comment.number_of_likes}} likes</em><br>
+            
+                  <input type="button" class="btn btn-primary btn-sm" value="Like" onclick="like_post( {{ comment.id}} )" />
 
                   {% if comment.user_id == user_id%}
-                  <input type="button" value="Edit" onclick="edit_post( {{ comment.id}} )" />
+                  <input type="button" class="btn btn-secondary btn-sm" value="Edit" onclick="edit_post( {{ comment.id}} )" />
                   <br>                       
                    {% endif %}
                

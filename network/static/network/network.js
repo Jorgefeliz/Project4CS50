@@ -148,5 +148,27 @@ function old_post( comment_id){
 
 }
 
+function like_post( comment_id ){
 
+  let route = '/like_post' 
+
+  console.log(route)
+  fetch(route, {
+    method: 'POST',
+    body: JSON.stringify({
+        comment_id: comment_id
+  
+           })
+      })
+    .then(response => response.json())
+    .then(result => {
+        // Print result
+  
+        console.log(result);
+
+        let mydiv = "like" + comment_id;
+        document.getElementById(mydiv).innerText = result["likes"] + " likes"
+
+      });
+}
   

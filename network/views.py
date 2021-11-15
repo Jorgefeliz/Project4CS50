@@ -96,7 +96,8 @@ def new_post(request):
         post = Comments.objects.create(
             user_id = user_id,
             comment = comment,
-            comment_time = datetime.now()
+            comment_time = datetime.now(),
+            number_of_likes = 0
         )
 
         try:
@@ -262,3 +263,35 @@ def edit_post(request):
        
 
         return JsonResponse(to_update.serialize(), safe=False)
+
+@csrf_exempt
+@login_required
+def like_post (request):
+    if request.method == 'POST':
+        try:
+            comment = json.loads(request.body)
+        except:
+            comment = 999
+
+        print(comment['comment_id'])
+
+#-------------------------------------------------------------------------------#
+
+        user = User.objects.get(pk= request.user.id)
+
+        post = Comments.objects.get(pk = comment['comment_id'])
+
+        post.number_of_likes = post.likes.count()
+        post.save()
+
+        if post in user.all_liked_post.all():
+            post.likes.remove(user)
+            post.number_of_likes = post.number_of_likes  - 1
+           
+        
+        else:
+            post.likes.add(user)
+            post.number_of_likes = post.number_of_likes  + 1
+        
+        post.save()
+        return JsonResponse({"likes": post.number_of_likes}, safe=False)
