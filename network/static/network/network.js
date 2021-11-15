@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function add_follower(user_id){
-    console.log(user_id);
+ 
     let route = "/followers/" + user_id ; 
-    console.log(route);
+
     fetch(route, {
         method: 'POST',
         body: JSON.stringify({
@@ -32,7 +32,6 @@ function edit_post(comment_id){
 
   let route = '/edit_post' 
 
-  console.log(route)
   fetch(route, {
     method: 'POST',
     body: JSON.stringify({
@@ -44,7 +43,7 @@ function edit_post(comment_id){
     .then(result => {
         // Print result
   
-        console.log(result);
+        //console.log(result);
      
   
   document.getElementById(mydiv).innerHTML = `
@@ -73,12 +72,11 @@ function update_post(comment_id){
   
   let mydiv = "texto" + comment_id;
   let new_comment = "text" + comment_id;
-  console.log(mydiv)
+  
   new_comment = document.getElementById(new_comment).value;
 
   let route = '/edit_post' 
 
-  console.log(route)
   fetch(route, {
     method: 'PUT',
     body: JSON.stringify({
@@ -92,12 +90,6 @@ function update_post(comment_id){
   .then(result => {
   
  
-      console.log(result);
-     
-
-
-
-  
       
       //document.getElementById(mydiv).innerHTML = "";
       document.getElementById(mydiv).innerHTML = `
@@ -106,9 +98,9 @@ function update_post(comment_id){
 
               
         <p>${result["comment"]}</p>
-        <button type="button" class="btn btn-primary btn-sm">Like</button>
+        <input type="button" class="btn btn-primary btn-sm" value="Like" onclick="like_post( ${comment_id} )" />
 
-        <input type="button" value="Edit" onclick="edit_post( ${comment_id} )" />
+        <input type="button" class="btn btn-secondary btn-sm" value="Edit" onclick="edit_post( ${comment_id} )" />
         <br>                       
     
 
@@ -126,8 +118,7 @@ function old_post( comment_id){
 
   let old_text = "text"+ comment_id;
   old_text = document.getElementById(old_text).value;
-  console.log(old_text);
-
+  
   let mydiv = "texto" + comment_id;
   document.getElementById(mydiv).innerHTML = `
       
@@ -135,9 +126,9 @@ function old_post( comment_id){
 
           
     <p>${old_text}</p>
-    <button type="button" class="btn btn-primary btn-sm">Like</button>
+    <input type="button" class="btn btn-primary btn-sm" value="Like" onclick="like_post( ${comment_id} )" />
 
-    <input type="button" value="Edit" onclick="edit_post( ${comment_id} )" />
+    <input type="button" class="btn btn-secondary btn-sm" value="Edit" onclick="edit_post( ${comment_id} )" />
     <br>                       
 
 
@@ -152,7 +143,7 @@ function like_post( comment_id ){
 
   let route = '/like_post' 
 
-  console.log(route)
+  
   fetch(route, {
     method: 'POST',
     body: JSON.stringify({
@@ -164,7 +155,7 @@ function like_post( comment_id ){
     .then(result => {
         // Print result
   
-        console.log(result);
+      
 
         let mydiv = "like" + comment_id;
         document.getElementById(mydiv).innerText = result["likes"] + " likes"

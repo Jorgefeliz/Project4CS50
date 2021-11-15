@@ -91,7 +91,7 @@ def new_post(request):
         user_id = User.objects.get(pk=request.user.id)
         comment = request.POST['comment']
 
-        print(f"aqui estoy: {comment}")
+        
 
         post = Comments.objects.create(
             user_id = user_id,
@@ -130,7 +130,7 @@ def profile(request, user_id):
     followers = len(Followers.objects.filter(follower=user_id))
 
     testing = Followers.objects.filter(follower=user_id)
-    print(testing)
+   
 
     already_follow = len(Followers.objects.filter(user_id=request.user.id).filter(follower=user_id))
     if already_follow == 1:
@@ -168,7 +168,7 @@ def followers(request):
         if follow_action == "Follow":
       
             user_follower = Followers.objects.filter(user_id=request.user.id).filter(follower = to_follow_id)
-            print(user_follower)
+        
             if len(user_follower) == 0:
                 #agregar comprobacion de que no sea el mismo user quien se siga
                 new_follower = Followers.objects.create(
@@ -232,8 +232,6 @@ def edit_post(request):
         except:
             comment = 999
 
-        print(comment['comment_id'])
-
         to_edit = Comments.objects.get(pk = comment['comment_id'])
 
         
@@ -247,13 +245,11 @@ def edit_post(request):
         except:
             return JsonResponse({"message": "Error, while updating"}, safe=False)
 
-        print(comment['new_comment'])
-
+       
         to_update = Comments.objects.get(pk = comment['comment_id'])
 
         user = User.objects.get(pk=request.user.id)
-        print(user)
-        print(to_update.user_id)
+
         if (user == to_update.user_id):
             to_update.comment = comment['new_comment']
             to_update.save()
@@ -271,9 +267,7 @@ def like_post (request):
         try:
             comment = json.loads(request.body)
         except:
-            comment = 999
-
-        print(comment['comment_id'])
+            return JsonResponse({"message": "Error while reading json"}, safe=False)
 
 #-------------------------------------------------------------------------------#
 
